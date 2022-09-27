@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="row">
+        <app-carousel [type]="'popular'" [movies]="popular" title="Películas Populares" class="mt-5"></app-carousel>
+
+        <app-carousel [type]="'latest'" [movies]="latest" title="Películas mejor calificadas" class="mt-5">
+        </app-carousel>
+
+        <app-carousel [type]="'now_playing'" [movies]="now_playing" title="Películas en cartelera" class="mt-5">
+        </app-carousel>
+
+        <app-carousel [type]="'upcoming'" [movies]="upcoming" title="Próximas Películas" class="mt-5"></app-carousel>
+    </div>
+</div>

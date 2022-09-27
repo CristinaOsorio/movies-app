@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+.overflow::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.overflow::-webkit-scrollbar:vertical {
+    width: 10px;
+}
+
+.overflow::-webkit-scrollbar-button:increment,
+.overflow::-webkit-scrollbar-button {
+    display: none;
+}
+
+.overflow::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.overflow::-webkit-scrollbar-thumb {
+    background-color: #797979;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+.overflow::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.truncate {
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 75px;
+}

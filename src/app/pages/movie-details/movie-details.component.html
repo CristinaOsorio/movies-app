@@ -1,0 +1,98 @@
+<ng-container *ngIf="movie">
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-4 col-lg-2 text-center">
+
+                <app-image-content [class]="'card-img-top'" [sources]="createSources()"
+                    [imgDefault]="createImageDefault()"></app-image-content>
+
+            </div>
+            <div class="col-md-8 col-lg-10">
+
+                <h3>
+                    {{ movie.title }}
+                    <small class="text-muted">{{ movie.original_title }}</small>
+                </h3>
+                <hr>
+
+                <h4>Resume</h4>
+                <p>{{ movie.overview | noInformation}}</p>
+                <p>Año: {{ movie.release_date | date:'yyyy' | noInformation }}</p>
+
+                <div *ngIf="movie.genres.length > 0; else noGender">
+                    <span class="badge bg-success rounded-pill m-1 px-2" *ngFor="let gender of movie.genres">
+                        {{ gender.name }}
+                    </span>
+                </div>
+
+                <ng-template #noGender>
+                    Genero no especificado.
+                </ng-template>
+
+                <div class="mt-4">
+                    <button type="button" class="btn btn-outline-dark rounded-circle" (click)="addWatchlist()">
+                        <i class="fas fa-bookmark"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="h5 pb-2 text-dark border-bottom border-dark">
+                    Reparto
+                </div>
+            </div>
+        </div>
+
+        <ng-container *ngIf="casts.cast.length > 0; else noCasts">
+            <div class="row flex-nowrap overflow pb-3">
+                <div *ngFor="let cast of casts.cast" class="wrapper">
+                    <div class="card">
+                        <div class="card-body h-100 p-0">
+                            <app-image-content [class]="'card-img-top'" [imgDefault]="createImgDefaultCast(cast)">
+                            </app-image-content>
+                        </div>
+
+                        <div class="card-footer text-center h-100">
+                            <h6 class="card-title">{{ cast.name }}</h6>
+                            <p class="card-text small m-0">{{ cast.character }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="h5 pb-2 text-dark border-bottom border-dark">
+                    Recomendaciones
+                </div>
+            </div>
+            <ng-container *ngIf="recommendations.length > 0; else notSpecified">
+                <app-carousel [movies]="recommendations"></app-carousel>
+            </ng-container>
+
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #notSpecified>
+    <div class="row">
+        <div class="col">
+            <app-alert title="Sin recomendaciones"
+                content="No tenemos suficiente información para recomendarte películas basadas en {{movie.title}}!.">
+            </app-alert>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noCasts>
+    <div class="row">
+        <div class="col">
+            <app-alert title="Sin información" content="No existen registros a cerca de las o los participantes.">
+            </app-alert>
+        </div>
+    </div>
+</ng-template>

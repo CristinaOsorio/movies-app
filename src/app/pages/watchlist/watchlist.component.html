@@ -1,0 +1,51 @@
+<div class="container my-5">
+    <div class="row">
+        <h2>Mi lista</h2>
+    </div>
+
+    <hr>
+
+    <ng-container *ngIf="movies.length > 0; else noRequest">
+        <div class="row" infiniteScroll [scrollWindow]="true" [fromRoot]="true" (scrolled)="onScroll()">
+            <div *ngFor="let movie of movies" class="col-md-6">
+                <div class="card mb-2">
+                    <div class="row">
+                        <div class="col-md-4 h-100">
+                            <app-percent class="position-sticky" [num]="movie.vote_average * 10"></app-percent>
+                            <app-image-content [imgDefault]="createImageDefault(movie)"
+                                [class]="'img-fluid rounded-start'"></app-image-content>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body h-100">
+                                <h5 class="card-title">{{ movie.title }}</h5>
+                                <p class="card-text truncate">{{ movie.overview }}</p>
+
+                                <p class="card-text"><small class="text-muted">{{ movie.release_date }}</small></p>
+
+                                <div class="float-end">
+                                    <button class="btn btn-outline-danger rounded-circle me-1"
+                                        (click)="deleteWatchlist(movie)">
+                                        <i class="fa-solid fa-x"></i>
+                                    </button>
+                                    <button class="btn btn-outline-primary rounded-circle"
+                                        [routerLink]="['/movies', movie.id]">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #noRequest>
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-warning" role="alert">
+                    Sin resultados
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

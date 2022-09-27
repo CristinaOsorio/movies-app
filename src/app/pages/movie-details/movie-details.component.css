@@ -1,0 +1,50 @@
+.card-title,
+.card-text {
+    font-size: .75rem;
+}
+
+.card {
+    height: 100%;
+}
+
+.row {
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: auto;
+}
+
+
+.wrapper {
+    flex: 0 0 auto;
+    width: 40%;
+}
+
+.wrapper .card {
+    min-height: 180px;
+}
+
+.wrapper .card .image-content {
+    position: relative;
+}
+
+@media (max-width: 767.98px) {
+
+    .post {
+        max-height: 200px;
+    }
+}
+
+@media (min-width: 767.98px) {
+
+    .wrapper {
+        flex: 0 0 auto;
+        width: 30%;
+    }
+}
+
+@media (min-width: 991.98px) {
+    .wrapper {
+        flex: 0 0 auto;
+        width: 12%;
+    }
+}

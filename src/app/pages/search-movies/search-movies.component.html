@@ -1,0 +1,23 @@
+<div class="container my-5">
+    <div class="row">
+        <h2>Resultados de la búsqueda</h2>
+    </div>
+    <hr>
+
+    <ng-container *ngIf="movies.length > 0; else noRequest">
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+            <div *ngFor="let movie of movies" class="col">
+                <app-card [movie]="movie"></app-card>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #noRequest>
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-warning" role="alert">
+                    Sin resultados
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
