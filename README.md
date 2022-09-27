@@ -2,6 +2,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.3.
 
+## Configuration Additional
+
+Create an account on  [TheMoviedb](https://www.themoviedb.org)
+Follow the steps for the creation of the api key on the page [TheMovieDB - Getting Started](https://developers.themoviedb.org/3/getting-started/introduction)
+Enter the api key in the directory enviroment -> enviroment.ts section with name apiKey
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
