@@ -15,7 +15,7 @@ export class InputSearchComponent implements OnInit {
 
   debouncer: Subject<string> = new Subject();
 
-  text: string = '';
+  @Input() text: string = '';
 
   ngOnInit(): void {
     this.debouncer

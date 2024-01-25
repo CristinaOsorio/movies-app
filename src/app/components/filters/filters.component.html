@@ -1,0 +1,55 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <div class="accordion mb-2" id="accordionOrderBy">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOrderBy">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOrderBy" aria-expanded="true" aria-controls="collapseOrderBy">
+                    Ordenar
+                </button>
+            </h2>
+            <div id="collapseOrderBy" class="accordion-collapse collapse show" aria-labelledby="headingOrderBy"
+                data-bs-parent="#accordionOrderBy">
+                <div class="accordion-body">
+                    <p>Ordenar resultados por: </p>
+                    <select name="orderBy" class="form-select" [(ngModel)]="orderBy">
+                        <option value="">Selecciona una opción</option>
+                        <option *ngFor="let item of ordersBy; let i = index" [attr.value]="i">{{ item.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion" id="accordionFilters">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFilters">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
+                    Filtros
+                </button>
+            </h2>
+            <div id="collapseFilters" class="accordion-collapse collapse" aria-labelledby="headingFilters"
+                data-bs-parent="#accordionFilters">
+                <div class="accordion-body">
+                    <p>Género</p>
+                    <div class="d-flex flex-wrap" ngModelArray="genres">
+                        <div *ngFor="let genre of genres; let i=index">
+                            <div ngModelGroup="genres">
+                                <input type="checkbox" class="btn-check" [id]="'genre-'+ genre.id" [name]="genre.id"
+                                    [(ngModel)]="genre.checkbox">
+                                <label class="btn btn-outline-primary  rounded-pill mt-1 me-1"
+                                    [for]="'genre-'+ genre.id">{{genre.name}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-grid gap-2 my-2">
+        <button class="btn btn-primary" type="submit">Buscar</button>
+    </div>
+</form>

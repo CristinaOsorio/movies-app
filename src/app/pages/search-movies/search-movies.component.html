@@ -1,23 +1,34 @@
-<div class="container my-5">
+<div class="container-fluid my-4">
     <div class="row">
-        <h2>Resultados de la búsqueda</h2>
-    </div>
-    <hr>
+        <div class="col-2">
+            <app-filters (onValues)=" setValues($event)">
+            </app-filters>
+        </div>
+        <div class="col-10 overflow-hidden">
 
-    <ng-container *ngIf="movies.length > 0; else noRequest">
-        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-            <div *ngFor="let movie of movies" class="col">
-                <app-card [movie]="movie"></app-card>
+            <div class="mb-5">
+                <app-input-search [text]="filters['with_text_query']"></app-input-search>
             </div>
-        </div>
-    </ng-container>
-    <ng-template #noRequest>
-        <div class="row">
-            <div class="col">
-                <div class="alert alert-warning" role="alert">
-                    Sin resultados
+
+            <h5>Resultados de la búsqueda</h5>
+
+            <hr>
+            <ng-container *ngIf="movies.length > 0; else noRequest">
+                <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 w-100 overflow-auto">
+                    <div *ngFor="let movie of movies" class="col">
+                        <app-card [movie]="movie"></app-card>
+                    </div>
                 </div>
-            </div>
+            </ng-container>
+            <ng-template #noRequest>
+                <div class="row">
+                    <div class="col">
+                        <div class="alert alert-warning" role="alert">
+                            Sin resultados
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
         </div>
-    </ng-template>
+    </div>
 </div>

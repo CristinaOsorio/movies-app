@@ -10,6 +10,7 @@ import { PercentComponent } from './percent/percent.component';
 import { AlertComponent } from './alert/alert.component';
 import { ImageContentComponent } from './image-content/image-content.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { FiltersComponent } from './filters/filters.component';
 
 
 
@@ -21,13 +22,15 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     PercentComponent,
     AlertComponent,
     ImageContentComponent,
+    FiltersComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
     PipesModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    FormsModule
   ],
   exports: [
     CarouselComponent,
@@ -36,6 +39,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     AlertComponent,
     PercentComponent,
     ImageContentComponent,
+    FiltersComponent,
   ]
 })
 export class ComponentsModule { }
