@@ -69,7 +69,7 @@
             (onDebounce)="getSuggestions($event)"
           >
           </app-input-search>
-          <div class="list-group">
+          <div class="list-group position-absolute">
             <a
               *ngFor="let suggestion of suggestions"
               (click)="redirectTo(suggestion.id)"
