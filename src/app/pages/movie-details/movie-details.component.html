@@ -33,10 +33,15 @@
         <div class="mt-4" *ngIf="account">
           <button
             type="button"
-            class="btn btn-outline-dark rounded-circle"
+            class="btn btn-outline-dark rounded-circle bg-black"
             (click)="addWatchlist()"
           >
-            <i class="fas fa-bookmark"></i>
+            <i
+              class="fa-solid fa-bookmark fa-lg"
+              [ngStyle]="{
+                color: accountState.watchlist ? '#FFBF00' : '#FFFFFF'
+              }"
+            ></i>
           </button>
         </div>
       </div>

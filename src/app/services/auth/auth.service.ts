@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { API_URL } from 'src/app/data/constants.data';
 import { LocalStorageService } from './../local-storage/local-storage.service';
+import { AccountState } from './../../interfaces/account.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -79,6 +80,18 @@ export class AuthService {
       tap((account) => {
         this.currentAccountSubject.next(account);
       })
+    );
+  }
+
+  getAccountStates(movieId: number) {
+    let options = { ...this.httpOptions };
+
+    const params = options.params.set('session_id', this.session_id);
+    options.params = params;
+
+    return this.http.get<AccountState>(
+      `${API_URL}/movie/${movieId}/account_states`,
+      options
     );
   }
 
