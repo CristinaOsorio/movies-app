@@ -1,9 +1,9 @@
 import { Account } from '../../interfaces/account.interface';
-import { APP_URL } from 'src/app/data/constants.data';
+import { APP_URL } from './../../data/constants.data';
 import { AuthService } from './../../services/auth/auth.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { MoviesService } from 'src/app/services';
+import { MoviesService, LocalStorageService } from './../../services';
 import { map, mergeMap, of } from 'rxjs';
 
 interface Suggestions {
@@ -14,7 +14,7 @@ interface Suggestions {
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.css']
+  styleUrls: ['./toolbar.component.css'],
 })
 export class ToolbarComponent implements OnInit {
   suggestions: Suggestions[] = [];
@@ -24,8 +24,9 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private moviesService: MoviesService,
     private authService: AuthService,
-    private router: Router,
-  ) { }
+    private localStorageService: LocalStorageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.authService.currentSession
@@ -33,14 +34,14 @@ export class ToolbarComponent implements OnInit {
         mergeMap((data) => {
           if (data) {
             this.isLogin = true;
-            return this.authService.getDataAccount()
+            return this.authService.getDataAccount();
           }
           this.isLogin = false;
-          return of()
+          return of();
         })
-
-      ).subscribe((account) => {
-        if (account) { this.account = account; }
+      )
+      .subscribe((account) => {
+        if (account) this.account = account;
       });
   }
 
@@ -49,8 +50,8 @@ export class ToolbarComponent implements OnInit {
     value = value.trim();
     const params: NavigationExtras = {
       queryParams: {
-        query: value
-      }
+        query: value,
+      },
     };
     this.router.navigate(['/movies/search'], value ? params : undefined);
   }
@@ -59,41 +60,40 @@ export class ToolbarComponent implements OnInit {
     value = value.trim();
     if (value) {
       this.suggestions = [];
-      this.moviesService.searchByQuery(value)
+      this.moviesService
+        .searchByQuery(value)
         .pipe(
-          map(data => {
+          map((data) => {
             const movies = data.results;
-            return movies.splice(0, 5).map(movie => {
+            return movies.splice(0, 5).map((movie) => {
               const year = new Date(movie.release_date).getFullYear();
               return {
                 id: movie.id,
                 title: `${movie.title} (${year})`,
               };
-            })
+            });
           })
         )
-        .subscribe(data => {
+        .subscribe((data) => {
           this.suggestions = data;
         });
     }
 
     this.suggestions = [];
-
   }
 
   login() {
-    this.authService.getRequestToken()
-      .subscribe(response => {
-        window.location.href = `https://www.themoviedb.org/authenticate/${response.request_token}?redirect_to=${APP_URL}`;
-      });
+    this.authService.getRequestToken().subscribe((response) => {
+      window.location.href = `https://www.themoviedb.org/authenticate/${response.request_token}?redirect_to=${APP_URL}`;
+    });
   }
 
   logout() {
-    const sessionId = JSON.parse(`${localStorage.getItem('session')}`);
+    const sessionId = this.localStorageService.getItem('session');
     if (sessionId) {
       this.authService.logout(sessionId);
     }
-    localStorage.removeItem('session');
+    this.localStorageService.removeItem('session');
     this.router.navigate(['/movies/all']);
   }
 
@@ -101,5 +101,4 @@ export class ToolbarComponent implements OnInit {
     this.suggestions = [];
     this.router.navigate(['/movies', movieId]);
   }
-
 }
