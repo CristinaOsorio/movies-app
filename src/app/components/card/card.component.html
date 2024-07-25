@@ -1,20 +1,32 @@
 <div class="card m-auto h-100" *ngIf="movie">
-    <div class="row h-100" style="position: relative;">
-        <app-image-content class="h-100" [class]="'card-img-top'" [sources]="sources" [imgDefault]="imageDefault">
-        </app-image-content>
-        <app-percent class="position-absolute" [num]="movie.vote_average * 10">
-        </app-percent>
+  <app-image-content
+    [class]="'card-img-top'"
+    [sources]="sources"
+    [imgDefault]="imageDefault"
+  >
+  </app-image-content>
+  <app-percent class="position-absolute" [num]="movie.vote_average * 10">
+  </app-percent>
+
+  <div class="card-body d-flex flex-column justify-content-between">
+    <h5 class="card-title">{{ movie.title }}</h5>
+    <p class="card-text truncate p-0 mb-3">
+      {{ movie.overview | noInformation }}
+    </p>
+    <div>
+      <button
+        *ngIf="account"
+        class="btn btn-sm btn-outline-success rounded-circle me-1"
+        (click)="addWatchlist()"
+      >
+        <i class="fas fa-bookmark"></i>
+      </button>
+      <button
+        class="btn btn-sm btn-outline-primary rounded-circle"
+        [routerLink]="['/movies', movie.id]"
+      >
+        <i class="fas fa-eye"></i>
+      </button>
     </div>
-    <div class="card-body">
-        <h5 class="card-title">{{ movie.title }}</h5>
-        <p class="card-text truncate p-0 mb-3">{{ movie.overview | noInformation }}</p>
-        <div>
-            <button *ngIf="account" class="btn btn-sm btn-outline-success rounded-circle me-1" (click)="addWatchlist()">
-                <i class="fas fa-bookmark"></i>
-            </button>
-            <button class="btn btn-sm btn-outline-primary rounded-circle" [routerLink]="['/movies', movie.id]">
-                <i class="fas fa-eye"></i>
-            </button>
-        </div>
-    </div>
+  </div>
 </div>
