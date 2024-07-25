@@ -1,29 +1,27 @@
 import { ImageDefault, Source } from './../../interfaces';
 import { Component, Input, OnInit } from '@angular/core';
 
-
-
 @Component({
   selector: 'app-image-content',
   templateUrl: './image-content.component.html',
-  styleUrls: ['./image-content.component.css']
+  styleUrls: ['./image-content.component.css'],
 })
 export class ImageContentComponent implements OnInit {
   @Input() sources: Source[] = [];
   @Input() class: string = '';
+  @Input() height: number = 320;
   @Input() imgDefault: ImageDefault = {
     src: '',
-    title: 'imagen'
+    title: 'imagen',
   };
   showImage = true;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
-
+  ngOnInit(): void {}
 
   loadImage(media: string): string {
-    const img = this.sources.find(img => img.media = media);
+    const img = this.sources.find((img) => (img.media = media));
     return `${img?.src} ${img?.width}`;
   }
 
@@ -31,5 +29,4 @@ export class ImageContentComponent implements OnInit {
     e.target.onerror = null;
     this.showImage = false;
   }
-
 }

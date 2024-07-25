@@ -5,7 +5,7 @@
     [attr.srcset]="source.src"
   />
   <img
-    class="standard-height"
+    [style.height]="height + 'px'"
     [ngClass]="class"
     [src]="imgDefault.src"
     [attr.alt]="imgDefault.title"
@@ -16,7 +16,8 @@
 
 <ng-template #noImage>
   <div
-    class="d-flex justify-content-center align-items-center standard-height bg-light rounded-2"
+    class="d-flex justify-content-center align-items-center bg-light rounded-2"
+    [style.height]="height + 'px'"
   >
     <span class="fa-stack fa-3x">
       <i class="fa-solid fa-image fa-stack-1x" style="color: #198754"></i>

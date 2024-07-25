@@ -27,6 +27,11 @@
     position: relative;
 }
 
+.card-img-height {
+  height: 200px !important;
+  max-height: 200px !important;
+}
+
 @media (max-width: 767.98px) {
 
     .post {
