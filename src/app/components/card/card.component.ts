@@ -1,17 +1,16 @@
 import { takeUntil, Subject } from 'rxjs';
 import { CreateWatchlist } from './../../interfaces/watchlist.interface';
 import { WatchlistService } from './../../services/watchlist/watchlist.service';
-import { Account } from './../../interfaces/account.interface';
+import { Account, AccountState } from './../../interfaces/account.interface';
 import { AuthService } from './../../services/auth/auth.service';
 import { ImageDefault, Movie, Source } from '../../interfaces';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { IMAGEN_URL } from 'src/app/data/constants.data';
 
-
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css']
+  styleUrls: ['./card.component.css'],
 })
 export class CardComponent implements OnInit, OnDestroy {
   @Input() movie!: Movie;
@@ -19,21 +18,26 @@ export class CardComponent implements OnInit, OnDestroy {
   showImage = true;
   sources: Source[] = [];
   imageDefault!: ImageDefault;
-
+  accountState: AccountState = {
+    id: 0,
+    favorite: false,
+    rated: false,
+    watchlist: false,
+  };
 
   private onDestroy$ = new Subject<boolean>();
 
-  constructor(private watchlistService: WatchlistService, private authService: AuthService) { }
+  constructor(
+    private watchlistService: WatchlistService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.createSources();
     this.createImageDefault();
     this.authService.currentAccount
-      .pipe(
-        takeUntil(this.onDestroy$))
-      .subscribe(data => {
-        this.account = data;
-      })
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((data) => (this.account = data));
   }
 
   ngOnDestroy(): void {
@@ -41,25 +45,21 @@ export class CardComponent implements OnInit, OnDestroy {
     this.onDestroy$.complete();
   }
 
-  error(e: any) {
-    e.target.onerror = null;
-    this.showImage = false;
-  }
+  addWatchlist(event: Event) {
+    event.stopPropagation();
 
-  addWatchlist() {
     if (this.account) {
       const data: CreateWatchlist = {
         media_id: this.movie.id,
         media_type: 'movie',
-        watchlist: true
-      }
+        watchlist: true,
+      };
 
       this.watchlistService
         .addWatchlist(this.account.id, data)
         .subscribe(() => {
-          alert(`La película ${this.movie.title} ha sido agregada a la lista.`)
-        })
-
+          alert(`La película ${this.movie.title} ha sido agregada a la lista.`);
+        });
     }
   }
 
@@ -68,22 +68,28 @@ export class CardComponent implements OnInit, OnDestroy {
       {
         media: '(max-width: 799px)',
         src: `${IMAGEN_URL}/w220_and_h330_face${this.movie.poster_path}`,
-        width: 220
+        width: 220,
       },
       {
-
         media: '(min-width: 800px)',
         src: `${IMAGEN_URL}/w220_and_h330_face${this.movie.poster_path}`,
-        width: 440
-      }
+        width: 440,
+      },
     ];
   }
 
   createImageDefault() {
     this.imageDefault = {
       title: this.movie.title,
-      src: `${IMAGEN_URL}/w220_and_h330_face${this.movie.poster_path}`
+      src: `${IMAGEN_URL}/w220_and_h330_face${this.movie.poster_path}`,
     };
   }
-}
 
+  getAccountStates(event: Event) {
+    event.stopPropagation();
+
+    this.authService.getAccountStates(this.movie.id).subscribe((data) => {
+      this.accountState = data;
+    });
+  }
+}

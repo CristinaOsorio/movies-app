@@ -62,8 +62,10 @@ export class MoviesService {
   }
 
   searchMovieById(id: number): Observable<MovieDetails> {
-    const options = { ...this.httpOptions };
-    options.params.delete('sort_by');
+    let options = {
+      ...this.httpOptions,
+      params: this.httpOptions.params.delete('sort_by'),
+    };
     return this.http.get<MovieDetails>(`${API_URL}/movie/${id}`, options);
   }
 

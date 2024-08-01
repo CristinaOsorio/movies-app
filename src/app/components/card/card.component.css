@@ -1,3 +1,7 @@
 .card {
   max-width: 250px;
 }
+
+.dropdown-toggle::after {
+  display: none !important;
+}
