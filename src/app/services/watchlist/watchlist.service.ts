@@ -10,7 +10,7 @@ import { API_URL } from './../../data/constants.data';
   providedIn: 'root',
 })
 export class WatchlistService {
-  private apiKey: string = environment.API_KEY;
+  private apiKey: string = environment.apiKey;
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json;charset=utf-8',

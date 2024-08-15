@@ -15,7 +15,7 @@ import {
   providedIn: 'root',
 })
 export class MoviesService {
-  private apiKey: string = environment.API_KEY;
+  private apiKey: string = environment.apiKey;
 
   private httpOptions = {
     headers: new HttpHeaders({
