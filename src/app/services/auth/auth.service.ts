@@ -32,7 +32,7 @@ export class AuthService {
     this.currentSession = this.currentSessionSubject.asObservable();
   }
 
-  private apiKey: string = environment.apiKey;
+  private apiKey: string = environment.API_KEY;
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
