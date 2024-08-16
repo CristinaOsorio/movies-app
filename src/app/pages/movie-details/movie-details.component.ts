@@ -61,7 +61,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
         this.movie = details;
         this.recommendations = recommendations.results;
         this.casts = casts;
-        this.accountState = accountState;
+        this.accountState = accountState;        
       });
 
     this.searchAccountCurrent();

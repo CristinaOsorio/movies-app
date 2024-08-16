@@ -87,7 +87,6 @@ export class CardComponent implements OnInit, OnDestroy {
 
   getAccountStates(event: Event) {
     event.stopPropagation();
-
     this.authService.getAccountStates(this.movie.id).subscribe((data) => {
       this.accountState = data;
     });

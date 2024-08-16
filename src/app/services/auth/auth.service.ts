@@ -1,5 +1,5 @@
 import { Account, Session, RequestToken } from '../../interfaces';
-import { Observable, map, BehaviorSubject, tap } from 'rxjs';
+import { Observable, map, BehaviorSubject, tap, of } from 'rxjs';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
@@ -86,13 +86,24 @@ export class AuthService {
   getAccountStates(movieId: number) {
     let options = { ...this.httpOptions };
 
-    const params = options.params.set('session_id', this.session_id);
-    options.params = params;
+      if (this.session_id) {
 
-    return this.http.get<AccountState>(
-      `${API_URL}/movie/${movieId}/account_states`,
-      options
-    );
+      const params = options.params.set('session_id', this.session_id);
+      options.params = params;
+
+      return this.http.get<AccountState>(
+        `${API_URL}/movie/${movieId}/account_states`,
+        options
+      );
+
+    }
+
+    return of({
+    id: 0,
+    favorite: false,
+    rated: false,
+    watchlist: false,
+  })
   }
 
   private createSession(request_token: string): Observable<Session> {
